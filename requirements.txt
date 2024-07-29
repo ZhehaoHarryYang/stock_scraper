@@ -1,0 +1,6 @@
+selenium==4.22.0
+lxml==4.6.3
+requests==2.26.0
+pandas==1.4.4
+beautifulsoup4==4.11.2
+pymongo==4.8.0
