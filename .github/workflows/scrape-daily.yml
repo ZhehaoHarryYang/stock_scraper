@@ -1,51 +1,50 @@
-name: Run Daily Scraper
+name: Run Scraper
 
 on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour at the 0th minute
   push:
     branches:
       - main
   pull_request:
     branches:
       - main
-  schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
 
 jobs:
-  run-daily-scraper:
+  build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        mongodb-version: [7.0]
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
 
-      - name: Set PYTHONPATH
-        run: |
-          echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install chromedriver-autoinstaller selenium
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install chromedriver-autoinstaller
-  
-      - name: Install Chrome
-        uses: browser-actions/setup-chrome@v2
+    - name: Install Chrome
+      uses: browser-actions/setup-chrome@v2
+      with:
+        chrome-version: 'latest'
 
-      - name: Set up MongoDB
-        uses: supercharge/mongodb-github-action@1.11.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
+    - name: Install ChromeDriver
+      run: |
+        CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+        LATEST_CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+        wget https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        sudo mv chromedriver /usr/local/bin/chromedriver
+        sudo chmod +x /usr/local/bin/chromedriver
 
-      - name: Run StockList scraper
-        run: python Scraping/StockList.py
 
-      - name: Run StockHistory scraper
-        run: python Scraping/StockHistory.py
+    - name: Run StockList scraper
+      run: python Scraping/StockList.py
+
+    - name: Run StockHistory scraper
+      run: python Scraping/StockHistory.py
