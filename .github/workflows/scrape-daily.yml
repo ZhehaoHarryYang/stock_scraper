@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  build:
+  run-daily-scraper:
     runs-on: ubuntu-latest
 
     steps:
