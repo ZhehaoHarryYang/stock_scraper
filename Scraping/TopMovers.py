@@ -1,3 +1,6 @@
+
+from init_path import *  # Import the initialization script
+
 import requests
 from lxml import etree
 from models.mongo_connection import get_database, get_collection

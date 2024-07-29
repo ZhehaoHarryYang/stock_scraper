@@ -1,3 +1,5 @@
+from init_path import *  # Import the initialization script
+
 from models.mongo_connection import get_collection, get_database
 from SingleStock_History import get_historical_prices, update_historical_prices
 

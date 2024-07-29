@@ -1,3 +1,5 @@
+from init_path import *  # Import the initialization script
+
 import time
 # import requests
 from lxml import etree

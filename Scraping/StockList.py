@@ -1,3 +1,5 @@
+from init_path import *  # Import the initialization script
+
 import time
 import requests
 from lxml import etree
@@ -51,7 +53,7 @@ driver = get_chrome_driver()
 # # Close the browser
 # driver.quit()
 
-current_url = 'https://finance.yahoo.com/screener/unsaved/2a362db6-bf0a-48dc-b9cc-14b55a689613'
+current_url = 'https://finance.yahoo.com/screener/unsaved/048d95bc-745e-4087-9aa4-2ead70dc0830'
 # Parse the page source with lxml
 # e = etree.HTML(page_source)
 

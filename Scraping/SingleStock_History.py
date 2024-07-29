@@ -1,3 +1,5 @@
+from init_path import *  # Import the initialization script
+
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd

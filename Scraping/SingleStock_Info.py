@@ -1,3 +1,5 @@
+from init_path import *  # Import the initialization script
+
 import time
 # import requests
 from lxml import etree
@@ -81,7 +83,7 @@ def get_stock_info(symbol):
 
 
 # # get the stocks info and news
-stock_symbol = ['ACGBY', 'AAPL']
-for s in stock_symbol:
-    stock_info = get_stock_info(s)
+# stock_symbol = ['ACGBY', 'AAPL']
+# for s in stock_symbol:
+#     stock_info = get_stock_info(s)
 
