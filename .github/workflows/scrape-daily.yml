@@ -32,8 +32,13 @@ jobs:
           echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
-        
+        run: |
+          pip install -r requirements.txt
+          pip install chromedriver-autoinstaller
+  
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v2
+
       - name: Set up MongoDB
         uses: supercharge/mongodb-github-action@1.11.0
         with:
