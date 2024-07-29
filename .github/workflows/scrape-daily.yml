@@ -1,0 +1,27 @@
+name: Run Daily Scraper
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+
+jobs:
+  run-daily-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run StockList scraper
+        run: python Scraping/StockList.py
+
+      - name: Run StockHistory scraper
+        run: python Scraping/StockHistory.py
