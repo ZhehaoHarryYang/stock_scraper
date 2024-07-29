@@ -36,9 +36,22 @@ jobs:
       - name: Set PYTHONPATH
         run: |
           echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
-          
+
       - name: Run hourly scraper
         run: python Scraping/TopMovers.py
         env:
           MONGODB_URI: mongodb://localhost:27017
+      
+      - name: Verify MongoDB Data
+        run: |
+          python -c "
+          import pymongo
+          client = pymongo.MongoClient('mongodb://localhost:27017')
+          db = client['Stock_Web']
+          collection = db['top_gainers']
+          documents = collection.find()
+          for doc in documents:
+            print(doc)
+            "
+        
 
