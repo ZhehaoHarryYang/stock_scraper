@@ -33,7 +33,12 @@ jobs:
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
 
+      - name: Set PYTHONPATH
+        run: |
+          echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+          
       - name: Run hourly scraper
         run: python Scraping/TopMovers.py
         env:
           MONGODB_URI: mongodb://localhost:27017
+
