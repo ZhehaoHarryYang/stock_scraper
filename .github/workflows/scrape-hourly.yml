@@ -14,9 +14,12 @@ jobs:
   run-hourly-scraper:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        mongodb-version: [7.0]
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: --health-cmd "mongo --eval 'db.runCommand({ ping: 1 })'" --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - name: Checkout code
@@ -34,11 +37,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Set up MongoDB
-        uses: supercharge/mongodb-github-action@1.11.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
-      
       - name: Run hourly scraper
         run: python Scraping/TopMovers.py
         env:

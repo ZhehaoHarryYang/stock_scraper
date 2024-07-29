@@ -1,8 +1,16 @@
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Fetch the MongoDB URI from environment variables
+MONGODB_URI = os.getenv('MONGODB_URI')
 
 def get_database():
     # 提供MongoDB的连接字符串
-    client = MongoClient('mongodb://localhost:27017/')
+    client = MongoClient(MONGODB_URI)
     
     # 选择数据库
     db = client['Stock_Web']
