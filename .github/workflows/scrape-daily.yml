@@ -1,4 +1,4 @@
-name: Run Scraper
+name: Run daily Scraper
 
 on:
   schedule:
@@ -26,7 +26,6 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        pip install selenium
 
     - name: Install Google Chrome
       run: |
