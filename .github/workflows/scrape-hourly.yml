@@ -19,6 +19,8 @@ jobs:
         image: mongo:latest
         ports:
           - 27017:27017
+        options: --health-cmd="mongo --host localhost --eval 'db.runCommand(\"ping\").ok'" --health-interval=10s --health-timeout=5s --health-retries=5
+
         
 
     steps:
@@ -40,7 +42,7 @@ jobs:
 
       - name: Wait for MongoDB to be ready
         run: |
-          for i in $(seq 1 30); do
+          for i in $(seq 1 5); do
             if mongo --host localhost --eval "db.runCommand('ping').ok" > /dev/null 2>&1; then
               echo "MongoDB is ready!"
               exit 0
