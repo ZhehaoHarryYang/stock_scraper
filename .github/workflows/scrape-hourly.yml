@@ -14,6 +14,17 @@ jobs:
   run-hourly-scraper:
     runs-on: ubuntu-latest
 
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: > 
+          --health-cmd="nc -z localhost 27017" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -22,7 +33,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
-          
+
       - name: Set PYTHONPATH
         run: |
           echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
@@ -30,5 +41,20 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Wait for MongoDB to be ready
+        run: |
+          for i in $(seq 1 30); do
+            if mongo --host localhost --eval "db.runCommand('ping').ok" > /dev/null 2>&1; then
+              echo "MongoDB is ready!"
+              exit 0
+            fi
+            echo "Waiting for MongoDB..."
+            sleep 5
+          done
+          echo "MongoDB is not ready after waiting. Exiting."
+          exit 1
+
       - name: Run hourly scraper
         run: python Scraping/TopMovers.py
+        env:
+          MONGODB_URI: mongodb://localhost:27017
