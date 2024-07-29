@@ -1,4 +1,3 @@
-
 from init_path import *  # Import the initialization script
 
 import requests
