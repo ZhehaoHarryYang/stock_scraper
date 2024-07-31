@@ -18,4 +18,4 @@ def update_stock_info(symbol):
         print(f"Details with symbol {symbol} inserted.")
 
 
-update_stock_info('AAPL')
+# update_stock_info('AAPL')

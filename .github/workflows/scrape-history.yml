@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  run-daily-scraper:
+  run-detail-info-scraper:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,11 +29,6 @@ jobs:
     - name: Set PYTHONPATH
       run: |
         echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
-
-    - name: Run StockList scraper
-      run: python Scraping/StockList.py
-      env:
-        MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
     - name: Run StockHistory scraper
       run: python Scraping/StockHistory.py
