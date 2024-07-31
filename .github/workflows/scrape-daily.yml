@@ -37,14 +37,11 @@ jobs:
         wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
         sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-    - name: Install ChromeDriver
+    - name: Install Specific ChromeDriver Version
       run: |
-        # Fetch Chrome version
-        CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+')
-
-        # Fetch ChromeDriver version for that Chrome version
-        CHROMEDRIVER_VERSION=$(curl -sS "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
-
+        # Set a specific ChromeDriver version
+        CHROMEDRIVER_VERSION="114.0.5735.90" # Replace this with the desired version
+        
         # Download and install ChromeDriver
         wget "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
         unzip chromedriver_linux64.zip
