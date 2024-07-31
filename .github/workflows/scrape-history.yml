@@ -1,4 +1,4 @@
-name: Run daily Scraper
+name: Run history Scraper
 
 on:
   schedule:

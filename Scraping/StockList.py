@@ -61,7 +61,7 @@ current_url = 'https://finance.yahoo.com/screener/unsaved/048d95bc-745e-4087-9aa
 db = get_database()
 collection_Stocks = get_collection(db, 'StockList')
 
-for i in range(5):
+for i in range(10):
     # 发送请求 
     url = current_url + f'?count=25&offset={i * 25}'
     headers = {
