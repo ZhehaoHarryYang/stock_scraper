@@ -9,6 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium_driver import get_chrome_driver  # Import the driver function
 from models.mongo_connection import get_collection, get_database
 from SingleStock_News_Detail import update_stock_info
+from utils.marketCapSort import convert_market_cap_to_numeric
+from pymongo import DESCENDING
 
 # Get the Selenium driver
 # driver = get_chrome_driver()
@@ -61,6 +63,17 @@ current_url = 'https://finance.yahoo.com/screener/unsaved/048d95bc-745e-4087-9aa
 db = get_database()
 collection_Stocks = get_collection(db, 'StockList')
 
+def sort_stocks_by_market_cap():
+    db = get_database()
+    collection_Stocks = get_collection(db, 'StockList')
+    
+    # Perform a sort operation
+    sorted_stocks = collection_Stocks.find().sort('MarketCapValue', DESCENDING)
+    
+    # Optionally, print or return sorted stocks
+    for stock in sorted_stocks:
+        print(stock)
+
 for i in range(10):
     # 发送请求 
     url = current_url + f'?count=25&offset={i * 25}'
@@ -92,6 +105,9 @@ for i in range(10):
             'MarketCap': ele[7],
             'PER': ele[8]
         }
+
+        stock_data['MarketCapValue'] = convert_market_cap_to_numeric(stock_data['MarketCap'])
+
         # 清空集合
         if collection_Stocks.find_one({'symbol': ele[0]}):
         # If it exists, delete the document
@@ -104,5 +120,7 @@ for i in range(10):
         update_stock_info(ele[0])
 
     i += 1
+
+sort_stocks_by_market_cap()
 
 # driver.quit()
