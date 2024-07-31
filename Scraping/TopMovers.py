@@ -55,7 +55,6 @@ def topMover():
         collection_gainers.insert_many(topGainers)
     if topLosers:
         collection_losers.insert_many(topLosers)
-
-    print("top movers inserted into MongoDB successfully.")
+        print("top movers inserted into MongoDB successfully.")
 
 topMover()

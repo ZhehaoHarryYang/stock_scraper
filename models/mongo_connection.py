@@ -9,14 +9,17 @@ load_dotenv()
 MONGODB_URI = os.getenv('MONGODB_URI')
 
 def get_database():
-    # 提供MongoDB的连接字符串
     client = MongoClient(MONGODB_URI)
-    
-    # 选择数据库
+    print("Connected to MongoDB Atlas successfully")
+    # # List databases to verify connection
+    # databases = client.list_database_names()
+    # print("Databases:", databases)
     db = client['Stock_Web']
+
     return db
 
 def get_collection(db, collection_name):
-    # 选择集合
+    # Choose the collection
     collection = db[collection_name]
     return collection
+
