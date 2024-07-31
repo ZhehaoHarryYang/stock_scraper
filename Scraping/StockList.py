@@ -8,10 +8,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium_driver import get_chrome_driver  # Import the driver function
 from models.mongo_connection import get_collection, get_database
-from SingleStock_Info import get_stock_info
+from SingleStock_News_Detail import update_stock_info
 
 # Get the Selenium driver
-driver = get_chrome_driver()
+# driver = get_chrome_driver()
 
 # # Open the webpage
 # url = 'https://finance.yahoo.com/screener/equity/new/'
@@ -101,8 +101,8 @@ for i in range(5):
             print(f"{ele[0]} general info inserted into MongoDB successfully.")
         collection_Stocks.insert_one(stock_data)
         # get stock info
-        get_stock_info(ele[0])
+        update_stock_info(ele[0])
 
     i += 1
 
-driver.quit()
+# driver.quit()
