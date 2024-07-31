@@ -8,7 +8,7 @@ def update_stock_info(symbol):
     collection_detail = get_collection(db, 'stock_details')
     detailInfo = get_stock_info(symbol)
     detailInfo['newsList'] = get_stock_news(symbol)
-
+    print(detailInfo)
     if collection_detail.find_one({'symbol': symbol}):
         collection_detail.delete_one({'symbol': symbol})
         collection_detail.insert_one(detailInfo)
@@ -18,4 +18,4 @@ def update_stock_info(symbol):
         print(f"Details with symbol {symbol} inserted.")
 
 
-# update_stock_info('AAPL')
+update_stock_info('tm')

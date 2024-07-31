@@ -95,7 +95,7 @@ for i in range(10):
         ele = [td.xpath('string(.)').strip() for td in tds]
 
         stock_data = {
-            'symbol': ele[0],
+            'symbol': ele[0].upper(),
             'name': ele[1],
             'price': ele[2],
             'change': ele[3],
@@ -109,15 +109,16 @@ for i in range(10):
         stock_data['MarketCapValue'] = convert_market_cap_to_numeric(stock_data['MarketCap'])
 
         # 清空集合
-        if collection_Stocks.find_one({'symbol': ele[0]}):
+        if collection_Stocks.find_one({'symbol': stock_data['symbol']}):
         # If it exists, delete the document
-            collection_Stocks.delete_one({'symbol': ele[0]})
-            print(f"general info with {ele[0]} updated.")
+            collection_Stocks.delete_one({'symbol': stock_data['symbol']})
+            print(f"general info with {stock_data['symbol']} updated.")
         else: 
-            print(f"{ele[0]} general info inserted into MongoDB successfully.")
+            print(f"{stock_data['symbol']} general info inserted into MongoDB successfully.")
         collection_Stocks.insert_one(stock_data)
-        # get stock info
-        update_stock_info(ele[0])
+        # get stock detail info
+        print()
+        update_stock_info(stock_data['symbol'])
 
     i += 1
 
