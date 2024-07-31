@@ -2,7 +2,7 @@ name: Run daily Scraper
 
 on:
   schedule:
-    - cron: '0 * * * *' # Runs every hour at the 0th minute
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
   push:
     branches:
       - main
@@ -43,9 +43,16 @@ jobs:
         sudo mv chromedriver /usr/local/bin/chromedriver
         sudo chmod +x /usr/local/bin/chromedriver
 
+    - name: Set PYTHONPATH
+      run: |
+        echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
     - name: Run StockList scraper
       run: python Scraping/StockList.py
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
     - name: Run StockHistory scraper
       run: python Scraping/StockHistory.py
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
