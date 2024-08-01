@@ -14,7 +14,7 @@ def fetch_stock_info(symbol):
     detailInfo['newsList'] = get_stock_news(symbol)
     return detailInfo
 
-def update_stock_info(symbol):
+def get_stock_details(symbol):
     db = get_database()
     collection_detail = get_collection(db, 'stock_details')
     
@@ -33,4 +33,4 @@ def update_stock_info(symbol):
         print(f"An error occurred while updating stock info for {symbol}: {e}")
 
 # Test the function
-update_stock_info('AAPL')
+# update_stock_info('AAPL')

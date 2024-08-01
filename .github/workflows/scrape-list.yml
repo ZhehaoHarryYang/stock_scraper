@@ -1,17 +1,12 @@
-name: Run detail Scraper
+name: Run stocklist Scraper
 
 on:
   schedule:
-      - cron: '10 * * * *' # Runs every hour at the 10th minute
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - cron: '0 * * * *' # Runs every hour at the 10th minute
+
 
 jobs:
-  run-detail-info-scraper:
+  run-list-info-scraper:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +26,6 @@ jobs:
         echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
     - name: Run StockList scraper
-      run: python Scraping/StockDetails.py
+      run: python Scraping/StockList.py
       env:
         MONGODB_URI: ${{ secrets.MONGODB_URI }}
