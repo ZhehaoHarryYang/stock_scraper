@@ -26,14 +26,12 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        pip install tenacity # Install tenacity directly
-
 
     - name: Set PYTHONPATH
       run: |
         echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
-    - name: Run StockList scraper
+    - name: Run stockdetail scraper
       run: python Scraping/StockDetails.py
       env:
         MONGODB_URI: ${{ secrets.MONGODB_URI }}
