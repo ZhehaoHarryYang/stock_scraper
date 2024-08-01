@@ -10,5 +10,5 @@ collection_Stocks = get_collection('StockList')
 stock_symbols = [stock['symbol'] for stock in collection_Stocks.find()]
 
 # Get detailed information for each stock
-for symbol in stock_symbols[175:]:
+for symbol in stock_symbols:
     update_stock_details(symbol)
