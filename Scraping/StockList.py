@@ -3,7 +3,6 @@ from init_path import *  # Import the initialization script
 import requests
 from lxml import etree
 from models.mongo_connection import get_collection, get_database
-from SingleStock_News_Detail import update_stock_info
 from utils.marketCapSort import convert_market_cap_to_numeric
 
 # Set the URL for scraping
@@ -52,8 +51,6 @@ for i in range(10):
             print(f"General info with symbol {stock_data['symbol']} inserted into MongoDB successfully.")
 
         Stocks.append(stock_data)
-        # Get stock detail info
-        update_stock_info(stock_data['symbol'])
 
 # Insert all the stocks
 collection_Stocks.insert_many(Stocks)
