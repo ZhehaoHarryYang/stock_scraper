@@ -20,11 +20,12 @@ def get_stock_info(symbol):
         if len(cols) == 1:
             cols.append(row.xpath('./span/fin-streamer/text()')[0])
         if cols:
+            if cols[0] == 'Avg. Volume': cols[0] = 'Average Volume'
             detailInfo[cols[0]] = cols[1]
-    
+            
+
     about = e.xpath("//div/div/div/p/text()")
     detailInfo['Overview'] = about[0] if about else ''
-    detailInfo['newsList'] = []
 
     return detailInfo
 
