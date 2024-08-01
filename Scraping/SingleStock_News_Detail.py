@@ -20,7 +20,8 @@ def get_stock_details(symbol):
     if detailInfo is None:  # If data is empty, retry once
         print(f"Received empty data for symbol {symbol}. Retrying...")
         detailInfo = fetch_stock_info(symbol)
-        return
+        if detailInfo is None: 
+            return
 
     if collection_detail.find_one({'symbol': symbol}):
         collection_detail.update_one(
