@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
 
-from models.mongo_connection import get_database, get_collection
+from models.mongo_connection import get_collection
 
 
 def convert_date(date_str):
@@ -49,8 +49,7 @@ def update_historical_prices(symbol):
     new_records = get_historical_prices(symbol)
     
     # 获取数据库和集合
-    db = get_database()
-    collection = get_collection(db, 'HistoryPrice')
+    collection = get_collection('HistoryPrice')
     
     # 获取现有数据中最新的日期
     pipeline = [

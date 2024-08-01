@@ -1,7 +1,9 @@
 from init_path import *  # Import the initialization script
 
-from models.mongo_connection import get_collection, get_database
+from models.mongo_connection import get_collection
 from SingleStock_Info import get_stock_info, get_stock_news
+
+collection_detail = get_collection('stock_details')
 
 def fetch_stock_info(symbol):
     detailInfo = get_stock_info(symbol)
@@ -11,8 +13,6 @@ def fetch_stock_info(symbol):
     return detailInfo
 
 def get_stock_details(symbol):
-    db = get_database()
-    collection_detail = get_collection(db, 'stock_details')
 
     attempts = 2
     # First attempt to fetch stock info

@@ -2,15 +2,14 @@ from init_path import *  # Import the initialization script
 
 import requests
 from lxml import etree
-from models.mongo_connection import get_collection, get_database
+from models.mongo_connection import get_collection
 from utils.marketCapSort import convert_market_cap_to_numeric
 
 # Set the URL for scraping
 current_url = 'https://finance.yahoo.com/screener/unsaved/048d95bc-745e-4087-9aa4-2ead70dc0830'
 
-# Get database and collection
-db = get_database()
-collection_Stocks = get_collection(db, 'StockList')
+# collection
+collection_Stocks = get_collection('StockList')
 Stocks = []
 
 for i in range(10):

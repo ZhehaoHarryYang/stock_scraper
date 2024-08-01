@@ -18,7 +18,9 @@ def get_database():
 
     return db
 
-def get_collection(db, collection_name):
+db = get_database()
+
+def get_collection(collection_name):
     # Choose the collection
     collection = db[collection_name]
     return collection

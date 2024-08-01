@@ -1,12 +1,11 @@
 from init_path import *  # Import the initialization script
 
-from models.mongo_connection import get_collection, get_database
+from models.mongo_connection import get_collection
 from SingleStock_History import get_historical_prices, update_historical_prices
 
 # Connect to database
-db = get_database()
-collection_Stocks = get_collection(db, 'StockList')
-collection_history = get_collection(db, 'HistoryPrice')
+collection_Stocks = get_collection('StockList')
+collection_history = get_collection('HistoryPrice')
 
 # Retrieve all stock symbols from the StockList collection
 stock_symbols = collection_Stocks.distinct('symbol')

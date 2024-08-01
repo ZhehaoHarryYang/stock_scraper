@@ -2,7 +2,7 @@ from init_path import *  # Import the initialization script
 
 import requests
 from lxml import etree
-from models.mongo_connection import get_database, get_collection
+from models.mongo_connection import get_collection
 
 def topMover():
 
@@ -42,9 +42,8 @@ def topMover():
     # print(topLosers)
 
     # 获取数据库和集合
-    db = get_database()
-    collection_gainers = get_collection(db, 'top_gainers')
-    collection_losers = get_collection(db, 'top_losers')
+    collection_gainers = get_collection('top_gainers')
+    collection_losers = get_collection('top_losers')
 
     # 清空集合
     collection_gainers.delete_many({})
