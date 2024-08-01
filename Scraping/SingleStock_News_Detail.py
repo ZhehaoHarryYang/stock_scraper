@@ -14,14 +14,20 @@ def get_stock_details(symbol):
     db = get_database()
     collection_detail = get_collection(db, 'stock_details')
 
+    attempts = 2
     # First attempt to fetch stock info
-    detailInfo = fetch_stock_info(symbol)
+    detailInfo = None
     
-    if detailInfo is None:  # If data is empty, retry once
-        print(f"Received empty data for symbol {symbol}. Retrying...")
+    for attempt in range(attempts):
         detailInfo = fetch_stock_info(symbol)
-        if detailInfo is None: 
-            return
+        if detailInfo is not None:
+            break
+        print(f"Attempt {attempt + 1}: Received empty data for symbol {symbol}. Retrying...")
+
+    if detailInfo is None:  # If still empty after all attempts
+        print(f"Failed to get valid data for symbol {symbol} after {attempts} attempts.")
+        return
+
 
     if collection_detail.find_one({'symbol': symbol}):
         collection_detail.update_one(
