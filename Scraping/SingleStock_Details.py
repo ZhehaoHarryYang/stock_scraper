@@ -15,6 +15,8 @@ def fetch_stock_details(symbol):
 
 def update_stock_details(symbol):
     detailInfo = fetch_stock_details(symbol)
+
+    if not detailInfo: return
     """Update or insert stock details into the database."""
     if collection_detail.find_one({'symbol': symbol}):
         collection_detail.update_one(
