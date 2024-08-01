@@ -26,8 +26,10 @@ def get_stock_info(symbol):
 
     about = e.xpath("//div/div/div/p/text()")
     detailInfo['Overview'] = about[0] if about else ''
-
-    return detailInfo
+    
+    if not isinstance(detailInfo, dict):
+        return {}
+    return {k: v for k, v in detailInfo.items() if v is not None and v != ''}
 
 def get_stock_news(symbol):
     url = f"https://finance.yahoo.com/quote/{symbol}/news"
