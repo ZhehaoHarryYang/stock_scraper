@@ -13,7 +13,7 @@ bulk_insert_data = []
 # Retrieve all stock symbols from the StockList collection
 stock_symbols = collection_Stocks.distinct('symbol')
 
-for symbol in stock_symbols[100:]:
+for symbol in stock_symbols:
     # Get new historical prices
     new_records = update_historical_prices(symbol)
     

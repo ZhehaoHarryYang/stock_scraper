@@ -3,13 +3,7 @@ name: Run news Scraper
 on:
   schedule:
       - cron: '10 * * * *' # Runs every hour at the 10th minute
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+  
 jobs:
   run-news-info-scraper:
     runs-on: ubuntu-latest

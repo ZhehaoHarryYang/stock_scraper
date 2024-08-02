@@ -52,7 +52,7 @@ def get_historical_prices(symbol):
 def update_historical_prices(symbol):
     # 获取新的历史价格数据
     new_records = get_historical_prices(symbol)
-    
+    if new_records == None: return None
     # 获取数据库和集合
     collection = get_collection('HistoryPrice')
     

@@ -29,21 +29,4 @@ jobs:
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }} # Use a GitHub secret to store your MongoDB Atlas URI
 
-      - name: Verify MongoDB Data
-        run: |
-          python -c "
-          import pymongo
-          import os
-          from dotenv import load_dotenv
-
-          load_dotenv()
-          MONGODB_URI = os.getenv('MONGODB_URI')
-          client = pymongo.MongoClient(MONGODB_URI)
-          db = client['Stock_Web']
-          collection = db['top_gainers']
-          documents = collection.find()
-          for doc in documents:
-            print(doc)
-            "
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }} # Ensure the environment variable is set here as well
+      
