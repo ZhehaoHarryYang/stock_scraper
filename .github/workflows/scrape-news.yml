@@ -1,4 +1,4 @@
-name: Run detail Scraper
+name: Run news Scraper
 
 on:
   schedule:
@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  run-detail-info-scraper:
+  run-news-info-scraper:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,8 +31,8 @@ jobs:
       run: |
         echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
-    - name: Run stockdetail scraper
-      run: python Scraping/StockDetails.py
+    - name: Run stock news scraper
+      run: python Scraping/StockNews.py
       env:
         MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
