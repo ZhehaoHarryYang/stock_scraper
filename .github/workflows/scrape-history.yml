@@ -3,7 +3,8 @@ name: Run history Scraper
 on:
   schedule:
     - cron: '0 0 * * *' # Runs daily at midnight UTC
-  
+  push: 
+    branches: 'main'
 
 jobs:
   run-detail-info-scraper:

@@ -16,16 +16,21 @@ def get_historical_prices(symbol):
     # send to which url
     url = f'https://finance.yahoo.com/quote/{symbol}/history/'
 
+    session = requests.Session()
+
     # camouflage
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
     # send request
-    resp = requests.get(url, headers=headers)
-    resp.encoding = 'unicode'
+    response = session.get(url, headers=headers)
 
-    soup = BeautifulSoup(resp.text, 'html.parser')
-
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+    else:
+        print(f"Failed to retrieve page. Status code: {response.status_code}")
+        return None
+    
     # 提取表格数据
     table = soup.find('table', {'class': "table yf-ewueuo"})
     rows = table.find_all('tr')
@@ -68,22 +73,14 @@ def update_historical_prices(symbol):
     latest_date = ''
     for result in latest_record:
         latest_date = result['hist_price'][0]['Date']
-    print(latest_date)
+
     filtered_records = []
     for record in new_records:
         if record['Date'] > latest_date:
             filtered_records.append(record)
         else:
             break
+    # Return the filtered records instead of inserting
+    return filtered_records
 
-    # Update the existing document for 'AAPL' with filtered records
-    result = collection.update_one(
-        {'symbol': symbol},
-        {'$addToSet': {'hist_price': {'$each': filtered_records}}},
-        upsert=True  # Insert the document if it doesn't exist
-    )
-    if result.modified_count > 0 or result.upserted_id:
-        print(f"Inserted {len(filtered_records)} new records into the {symbol} document.")
-    else:
-        print(f"No new records to insert or update for {symbol}.")
 

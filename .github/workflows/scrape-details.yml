@@ -3,12 +3,7 @@ name: Run detail Scraper
 on:
   schedule:
       - cron: '10 * * * *' # Runs every hour at the 10th minute
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  
 
 jobs:
   run-detail-info-scraper:

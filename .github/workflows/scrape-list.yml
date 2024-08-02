@@ -2,7 +2,7 @@ name: Run stocklist Scraper
 
 on:
   schedule:
-      - cron: '0 * * * *' # Runs every hour at the 10th minute
+      - cron: '0 * * * *' # Runs every hour at the 0 minute
 
 
 jobs:
