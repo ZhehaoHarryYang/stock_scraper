@@ -9,11 +9,14 @@ collection_history = get_collection('HistoryPrice')
 
 # Retrieve all stock symbols from the StockList collection
 stock_symbols = collection_Stocks.distinct('symbol')
+# record the failure symbols to manual add
+failed_stocks = []
 
 for symbol in stock_symbols:
     # Get new historical prices
     new_records = update_historical_prices(symbol)
-    
+    if not new_records:
+        failed_stocks.append(symbol)
     if new_records:
         # Prepare the data for single insert
         update_data = {
@@ -32,3 +35,5 @@ for symbol in stock_symbols:
             print(f"Error updating records for {symbol}: {e}")
     else: 
         print(f"No new historical records for {symbol}")
+
+print(failed_stocks)

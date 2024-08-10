@@ -7,7 +7,7 @@ on:
     branches: 'main'
 
 jobs:
-  run-detail-info-scraper:
+  run-history-info-scraper:
     runs-on: ubuntu-latest
 
     steps:
