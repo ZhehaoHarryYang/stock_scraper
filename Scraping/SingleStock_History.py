@@ -34,8 +34,7 @@ def get_historical_prices(symbol):
     # 提取表格数据
     table = soup.find('table', {'class': "table yf-ewueuo"})
     if table is None:
-        print(f"No table found for symbol: {symbol}. Check if the class name is correct or if the page structure has changed.")
-        return []
+        return False
 
     rows = table.find_all('tr')
 

@@ -15,8 +15,9 @@ failed_stocks = []
 for symbol in stock_symbols:
     # Get new historical prices
     new_records = update_historical_prices(symbol)
-    if not new_records:
+    if new_records == False:
         failed_stocks.append(symbol)
+        continue
     if new_records:
         # Prepare the data for single insert
         update_data = {
