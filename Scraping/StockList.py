@@ -6,7 +6,7 @@ from models.mongo_connection import get_collection
 from utils.marketCapSort import convert_market_cap_to_numeric
 
 # Set the URL for scraping
-current_url = 'https://finance.yahoo.com/screener/unsaved/048d95bc-745e-4087-9aa4-2ead70dc0830'
+current_url = 'https://finance.yahoo.com/screener/unsaved/c6b1d898-46a2-434f-a480-9fd6aa1cb6d7'
 
 # collection
 collection_Stocks = get_collection('StockList')
@@ -50,7 +50,7 @@ for i in range(10):
             print(f"General info with symbol {stock_data['symbol']} inserted into MongoDB successfully.")
 
         Stocks.append(stock_data)
-
+if Stocks:
 # Insert all the stocks
-collection_Stocks.insert_many(Stocks)
-print(f"{len(Stocks)} stocks inserted into MongoDB successfully.")
+    collection_Stocks.insert_many(Stocks)
+    print(f"{len(Stocks)} stocks inserted into MongoDB successfully.")
