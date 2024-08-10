@@ -7,9 +7,6 @@ from SingleStock_History import update_historical_prices
 collection_Stocks = get_collection('StockList')
 collection_history = get_collection('HistoryPrice')
 
-# List to accumulate new data for bulk insert
-bulk_insert_data = []
-
 # Retrieve all stock symbols from the StockList collection
 stock_symbols = collection_Stocks.distinct('symbol')
 
@@ -18,27 +15,20 @@ for symbol in stock_symbols:
     new_records = update_historical_prices(symbol)
     
     if new_records:
-        bulk_insert_data.append({
+        # Prepare the data for single insert
+        update_data = {
             'symbol': symbol,
             'hist_price': new_records
-        })
-        print(f"Prepared {len(new_records)} new historical records for {symbol}")
+        }
+        try:
+            # Update or insert the document
+            result = collection_history.update_one(
+                {'symbol': symbol},
+                {'$addToSet': {'hist_price': {'$each': new_records}}},
+                upsert=True  # Insert the document if it doesn't exist
+            )
+            print(f"Updated {len(new_records)} historical records for {symbol}. Matched count: {result.matched_count}, Modified count: {result.modified_count}")
+        except Exception as e:
+            print(f"Error updating records for {symbol}: {e}")
     else: 
-        print(f"no new historical records for {symbol}")
-
-# Perform bulk insert/update
-if bulk_insert_data:
-    # Create bulk operations
-    bulk_operations = []
-    for data in bulk_insert_data:
-        bulk_operations.append({
-            'update_one': {
-                'filter': {'symbol': data['symbol']},
-                'update': {'$addToSet': {'hist_price': {'$each': data['hist_price']}}},
-                'upsert': True  # Insert the document if it doesn't exist
-            }
-        })
-
-    # Execute the bulk operations
-    result = collection_history.bulk_write(bulk_operations)
-    print(f"Bulk update result: {result.bulk_api_result}")
+        print(f"No new historical records for {symbol}")
