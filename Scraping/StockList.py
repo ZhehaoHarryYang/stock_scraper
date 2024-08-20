@@ -48,9 +48,9 @@ for i in range(10):
             print(f"General info with symbol {stock_data['symbol']} updated.")
         else:
             print(f"General info with symbol {stock_data['symbol']} inserted into MongoDB successfully.")
+        if stock_data:
+            Stocks.append(stock_data)
 
-        Stocks.append(stock_data)
-print(Stocks)
 if Stocks is not None:
 # Insert all the stocks
     collection_Stocks.insert_many(Stocks)
