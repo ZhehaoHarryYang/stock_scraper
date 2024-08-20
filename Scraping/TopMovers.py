@@ -42,7 +42,7 @@ def topGainer():
         topGainers[i-1]['avgVol'] = text_content[5][0]
         topGainers[i-1]['marketCap'] = text_content[6][0]
         topGainers[i-1]['PER'] = text_content[7][0]
-        topGainers[i-1]['52WChangePer'] = text_content[8][0]
+        topGainers[i-1]['YearChangePer'] = text_content[8][0]
 
             
 
@@ -99,7 +99,7 @@ def topLoser():
         topLosers[i-1]['avgVol'] = text_content[5][0]
         topLosers[i-1]['marketCap'] = text_content[6][0]
         topLosers[i-1]['PER'] = text_content[7][0]
-        topLosers[i-1]['52WChangePer'] = text_content[8][0]
+        topLosers[i-1]['YearChangePer'] = text_content[8][0]
 
         
     # print(topLosers)
