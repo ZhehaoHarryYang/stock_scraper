@@ -29,29 +29,33 @@ for i in range(10):
         tds = row.xpath('./td')
         ele = [td.xpath('string(.)').strip() for td in tds]
 
-        stock_data = {
-            'symbol': ele[0].upper(),
-            'name': ele[1],
-            'price': ele[2],
-            'change': ele[3],
-            'perChange': ele[4],
-            'volume': ele[5],
-            'averageVolume': ele[6],
-            'MarketCap': ele[7],
-            'PER': ele[8]
-        }
-        stock_data['MarketCapValue'] = convert_market_cap_to_numeric(stock_data['MarketCap'])
+        if len(ele) >= 9:  # Ensure there's enough data in ele
+            stock_data = {
+                'symbol': ele[0].upper(),
+                'name': ele[1],
+                'price': ele[2],
+                'change': ele[3],
+                'perChange': ele[4],
+                'volume': ele[5],
+                'averageVolume': ele[6],
+                'MarketCap': ele[7],
+                'PER': ele[8]
+            }
+            stock_data['MarketCapValue'] = convert_market_cap_to_numeric(stock_data['MarketCap'])
 
-        # Update or insert stock data
-        if collection_Stocks.find_one({'symbol': stock_data['symbol']}):
-            collection_Stocks.delete_one({'symbol': stock_data['symbol']})
-            print(f"General info with symbol {stock_data['symbol']} updated.")
-        else:
-            print(f"General info with symbol {stock_data['symbol']} inserted into MongoDB successfully.")
-        if stock_data:
+            # Update or insert stock data
+            if collection_Stocks.find_one({'symbol': stock_data['symbol']}):
+                collection_Stocks.delete_one({'symbol': stock_data['symbol']})
+                print(f"General info with symbol {stock_data['symbol']} updated.")
+            else:
+                print(f"General info with symbol {stock_data['symbol']} inserted into MongoDB successfully.")
+
+            # Append stock_data to Stocks list
             Stocks.append(stock_data)
 
-if Stocks is not None:
-# Insert all the stocks
+# Check if Stocks is not empty before inserting
+if Stocks:
     collection_Stocks.insert_many(Stocks)
     print(f"{len(Stocks)} stocks inserted into MongoDB successfully.")
+else:
+    print("No stocks to insert.")
