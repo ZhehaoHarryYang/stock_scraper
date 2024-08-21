@@ -23,10 +23,15 @@ def get_stock_info(symbol):
             if cols[0] == 'Avg. Volume': cols[0] = 'Average Volume'
             detailInfo[cols[0]] = cols[1]
             
+    overview = e.xpath("//section/div/div/div/div/div/div/p/text()")
+    detailInfo['Overview'] = overview[0] if overview else ''
 
-    detailInfo['Overview'] = e.xpath("//section/div/div/div/div/div/div/p/text()")[0]
+    website = e.xpath("//section/div/div/div/div/div/div/a/@href")
+    if website:
+        detailInfo['Website'] = website[0]
+    else:
+        detailInfo['Website'] = ''  # or assign an empty string or any other default value
 
-    detailInfo['Website'] = e.xpath("//section/div/div/div/div/div/div/a/@href")[0]
 
     about = e.xpath("//section/div/div/div/div/div/div/div")
     for item in about:
@@ -68,4 +73,3 @@ def get_stock_news(symbol):
     return news_list
 
 
-get_stock_info('NVDA')
