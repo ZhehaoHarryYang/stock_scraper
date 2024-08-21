@@ -24,9 +24,18 @@ def get_stock_info(symbol):
             detailInfo[cols[0]] = cols[1]
             
 
-    about = e.xpath("//div/div/div/p/text()")
-    detailInfo['Overview'] = about[0] if about else ''
-    
+    detailInfo['Overview'] = e.xpath("//section/div/div/div/div/div/div/p/text()")[0]
+
+    detailInfo['Website'] = e.xpath("//section/div/div/div/div/div/div/a/@href")[0]
+
+    about = e.xpath("//section/div/div/div/div/div/div/div")
+    for item in about:
+        if len(item) == 0:
+            continue
+        note = item.xpath('./p//text()')[0].strip()
+        key = item.xpath('./h3//text()')[0].strip()
+        detailInfo[key] = note
+
     if not isinstance(detailInfo, dict):
         return {}
     return {k: v for k, v in detailInfo.items() if v is not None and v != ''}
@@ -57,3 +66,6 @@ def get_stock_news(symbol):
         })
 
     return news_list
+
+
+get_stock_info('NVDA')

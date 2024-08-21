@@ -29,4 +29,4 @@ def update_stock_details(symbol):
         print(f"Details with symbol {symbol} inserted.")
 
 
-# update_stock_details('CSCO')
+update_stock_details('IDCBF')
