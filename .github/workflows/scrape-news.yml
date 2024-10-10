@@ -2,7 +2,7 @@ name: Run news Scraper
 
 on:
   schedule:
-      - cron: '10 * * * *' # Runs every hour at the 10th minute
+      - cron: '10 1 * * *' # Runs every day at 1: 10 minute
   
 jobs:
   run-news-info-scraper:

@@ -2,7 +2,7 @@ name: Run topmover Scraper
 
 on:
   schedule:
-    - cron: '0 * * * *' # Runs every hour at the 0th minute
+    - cron: '0 3 * * *' # Runs every day at 3:00
 
 jobs:
   run-hourly-scraper:
